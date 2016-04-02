@@ -23,14 +23,18 @@ class Droplet(object):
         for attr in kwargs.keys():
             setattr(self,attr,kwargs[attr])
 
-    def call_api(self, path, params=dict()):
+    def call_api(self, path, params=None):
         """
             exposes any api entry
             useful when working with new API calls that are not yet implemented by Droplet class
         """
+        if params is None:
+            params = dict()
         return self.__call_api(path, params)
 
-    def __call_api(self, path, params=dict()):
+    def __call_api(self, path, params=None):
+        if params is None:
+            params = dict()
         payload = {'client_id': self.client_id, 'api_key': self.api_key}
         payload.update(params)
         r = requests.get("https://api.digitalocean.com/v1/droplets/%s%s" % ( self.id, path ), params=payload)

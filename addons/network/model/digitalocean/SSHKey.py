@@ -14,7 +14,9 @@ class SSHKey(object):
         for attr in kwargs.keys():
             setattr(self,attr,kwargs[attr])
 
-    def __call_api(self, path, params=dict()):
+    def __call_api(self, path, params=None):
+        if params is None:
+            params = dict()
         payload = {'client_id': self.client_id, 'api_key': self.api_key}
         payload.update(params)
         r = requests.get("https://api.digitalocean.com/v1/ssh_keys/%s%s" % ( self.id, path ), params=payload)

@@ -13,7 +13,9 @@ class Record(object):
         self.port = None
         self.weight = None
         
-    def __call_api(self, path, params=dict()):
+    def __call_api(self, path, params=None):
+        if params is None:
+            params = dict()
         payload = {'client_id': self.client_id, 'api_key': self.api_key}
         payload.update(params)
         r = requests.get("https://api.digitalocean.com/v1/domains/%s/records/%s%s" % (

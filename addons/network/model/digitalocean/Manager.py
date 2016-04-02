@@ -13,7 +13,9 @@ class Manager(object):
         self.api_key = api_key
         self.call_response = None
 
-    def __call_api(self, path, params=dict()):
+    def __call_api(self, path, params=None):
+        if params is None:
+            params = dict()
         payload = {'client_id': self.client_id, 'api_key': self.api_key}
         payload.update(params)
         r = requests.get("https://api.digitalocean.com/v1/%s" % path, params=payload)

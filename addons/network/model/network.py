@@ -361,7 +361,9 @@ class network_software_logpass(osv.Model):
         'encrypted': lambda obj, cursor, user, context: False,
     }
 
-    def onchange_password(self, cr, uid, ids, encrypted, context={}):
+    def onchange_password(self, cr, uid, ids, encrypted, context=None):
+        if context is None:
+            context = {}
         return {'value': {'encrypted': False}}
 
     def encrypt_password(self, cr, uid, ids, context=None):
@@ -512,7 +514,9 @@ class network_service(osv.Model):
 
         return True
 
-    def onchange_port(self, cr, uid, ids, port, context={}):
+    def onchange_port(self, cr, uid, ids, port, context=None):
+        if context is None:
+            context = {}
         if not port:
             return {}
         return {'value': {'public_port': port}}
